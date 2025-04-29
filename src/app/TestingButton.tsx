@@ -4,14 +4,22 @@ import { useSimpleLogTracker } from "simple-log-sdk";
 
 export const TestingButton = () => {
   const tracker = useSimpleLogTracker();
+  const [eventName, setEventName] = useState("click");
   return (
-    <button
-      type="button"
-      onClick={() => {
-        tracker.trackEvent("CLICK", { testing: "metadata" });
-      }}
-    >
-      Trigger event
-    </button>
+    <div>
+      <input
+        type="name"
+        value={eventName}
+        onChange={(e) => setEventName(e.target.value)}
+      ></input>
+      <button
+        type="button"
+        onClick={() => {
+          tracker.trackEvent(eventName, { testing: "metadata" });
+        }}
+      >
+        Trigger event
+      </button>
+    </div>
   );
 };
