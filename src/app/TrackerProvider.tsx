@@ -10,14 +10,13 @@ export function TrackerProviderWrapper({
   const router = useRouter();
 
   const getAPIKey = () => {
-    return (
-      localStorage.getItem("api_key") ??
-      process.env.NEXT_PUBLIC_SIMPLE_API_KEY!!
-    );
+    return window !== undefined
+      ? localStorage.getItem("api_key")
+      : process.env.NEXT_PUBLIC_SIMPLE_API_KEY!!;
   };
   return (
     <SimpleLogTrackerProvider
-      apiKey={getAPIKey()}
+      apiKey={getAPIKey() ?? process.env.NEXT_PUBLIC_SIMPLE_API_KEY!!}
       initOpts={{
         autoTrackRoutes: true,
         routeTrackingKey: "tracking_route",

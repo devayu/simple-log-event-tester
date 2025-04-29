@@ -4,7 +4,9 @@ import { useSimpleLogTracker } from "simple-log-sdk";
 
 export const TestingButton = () => {
   const tracker = useSimpleLogTracker();
-  const [apiKey, setApiKey] = useState(localStorage.getItem("api_key") ?? "");
+  const localStorageApiKey =
+    window !== undefined ? localStorage.getItem("api_key") : "";
+  const [apiKey, setApiKey] = useState(localStorageApiKey ?? "");
   return (
     <div>
       <input
@@ -15,7 +17,7 @@ export const TestingButton = () => {
       ></input>
       <button
         onClick={() => {
-          localStorage.setItem("api_key", apiKey);
+          window !== undefined && localStorage.setItem("api_key", apiKey);
           tracker.trackEvent("CLICK", { testing: "metadata" });
         }}
       >
